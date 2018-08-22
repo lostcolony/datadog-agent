@@ -246,29 +246,5 @@ else
 fi
 
 
-# Use systemd by default
-restart_cmd="$sudo_cmd systemctl restart datadog-agent.service"
-stop_instructions="$sudo_cmd systemctl stop datadog-agent"
-start_instructions="$sudo_cmd systemctl start datadog-agent"
-
-# Try to detect Upstart, this works most of the times but still a best effort
-if /sbin/init --version 2>&1 | grep -q upstart; then
-    restart_cmd="$sudo_cmd start datadog-agent"
-    stop_instructions="$sudo_cmd stop datadog-agent"
-    start_instructions="$sudo_cmd start datadog-agent"
-fi
-
-if [ $no_start ]; then
-    printf "\033[34m
-* DD_INSTALL_ONLY environment variable set: the newly installed version of the agent
-will not be started. You will have to do it manually using the following
-command:
-
-    $restart_cmd
-
-\033[0m\n"
-    exit
-fi
-
-sed -i .bak 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/'
+sudo_cmd sh -c "sed -i .bak 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu"
 ls /etc/systemd/system/multi-user.target.wants/

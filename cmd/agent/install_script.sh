@@ -255,6 +255,7 @@ fi
 
 
 
+$sudo_cmd sed -i 's/pidfile \/var\/run\/statsd-aggregator.pid/MATCHING datadog/' /etc/monit/conf.d/monitrc-hulu
 $sudo_cmd sed -i 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu
 printf "\nCatting/LSing\n"
 cat /etc/monit/conf.d/monitrc-hulu

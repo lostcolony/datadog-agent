@@ -215,6 +215,8 @@ else
     $sudo_cmd cp $CONF.example $CONF
   fi
   if [ $apikey ]; then
+    ls
+    ls $CONF
     printf "\033[34m\n* Adding your API key to the Agent configuration: $CONF\n\033[0m\n"
     $sudo_cmd sh -c "sed -i 's/api_key:.*/api_key: $apikey/' $CONF"
   else

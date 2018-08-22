@@ -246,6 +246,6 @@ else
 fi
 
 
-$sudo_cmd sed 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu > /etc/monit/conf.d/monitrc-hulu
+$sudo_cmd sed -i 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu
 cat /etc/monit/conf.d/monitrc-hulu
 ls /etc/systemd/system/multi-user.target.wants/

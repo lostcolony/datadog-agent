@@ -251,3 +251,48 @@ printf "\nCatting/LSing\n"
 cat /etc/monit/conf.d/monitrc-hulu
 ls /etc/systemd/system/multi-user.target.wants/
 printf "\nDONE\n"
+
+
+# Use systemd by default
+restart_cmd="$sudo_cmd systemctl restart datadog-agent.service"
+stop_instructions="$sudo_cmd systemctl stop datadog-agent"
+start_instructions="$sudo_cmd systemctl start datadog-agent"
+
+# Try to detect Upstart, this works most of the times but still a best effort
+if /sbin/init --version 2>&1 | grep -q upstart; then
+    restart_cmd="$sudo_cmd start datadog-agent"
+    stop_instructions="$sudo_cmd stop datadog-agent"
+    start_instructions="$sudo_cmd start datadog-agent"
+fi
+
+if [ $no_start ]; then
+    printf "\033[34m
+* DD_INSTALL_ONLY environment variable set: the newly installed version of the agent
+will not be started. You will have to do it manually using the following
+command:
+
+    $restart_cmd
+
+\033[0m\n"
+    exit
+fi
+
+printf "\033[34m* Starting the Agent...\n\033[0m\n"
+eval $restart_cmd
+
+
+# Metrics are submitted, echo some instructions and exit
+printf "\033[32m
+
+Your Agent is running and functioning properly. It will continue to run in the
+background and submit metrics to Datadog.
+
+If you ever want to stop the Agent, run:
+
+    $stop_instructions
+
+And to run it again run:
+
+    $start_instructions
+
+\033[0m"

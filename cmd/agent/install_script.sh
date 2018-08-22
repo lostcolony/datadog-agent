@@ -271,7 +271,10 @@ command:
 fi
 
 printf "\033[34m* Starting the Agent...\n\033[0m\n"
-eval $restart_cmd
+echo $restart_cmd
+ps aux
+$sudo_cmd service datadog-agent start
+#eval $restart_cmd
 
 
 # Metrics are submitted, echo some instructions and exit

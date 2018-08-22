@@ -210,13 +210,10 @@ if [ -e $CONF -a -z "$dd_upgrade" ]; then
   printf "\033[34m\n* Keeping old datadog.yaml configuration file\n\033[0m\n"
 else
   if [ ! -e $CONF ]; then
-    printf "$CONF does not exist"
-    ls
-    $sudo_cmd cp $CONF.example $CONF
+    wget https://raw.githubusercontent.com/lostcolony/datadog-agent/master/cmd/agent/datadog.yaml.example .
+    $sudo_cmd cp datadog.yaml.example $CONF
   fi
   if [ $apikey ]; then
-    ls
-    ls $CONF
     printf "\033[34m\n* Adding your API key to the Agent configuration: $CONF\n\033[0m\n"
     $sudo_cmd sh -c "sed -i 's/api_key:.*/api_key: $apikey/' $CONF"
   else

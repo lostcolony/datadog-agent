@@ -273,7 +273,7 @@ fi
 printf "\033[34m* Starting the Agent...\n\033[0m\n"
 cat /etc/monit/conf.d/monitrc-hulu
 printf "\nMONIT FILE END\n"
-PWD
+pwd
 ls
 eval $restart_cmd
 

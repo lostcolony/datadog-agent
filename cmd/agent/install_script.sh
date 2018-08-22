@@ -211,6 +211,11 @@ if [ -e $CONF -a -z "$dd_upgrade" ]; then
 else
   if [ ! -e $CONF ]; then
     curl https://raw.githubusercontent.com/lostcolony/datadog-agent/master/cmd/agent/datadog.yaml.example -o datadog.yaml.example
+    printf "\n*File listing: \n"
+    ls
+    printf "\nDONE\n"
+    $sudo_cmd mkdir $ETCDIR
+    ls $ETCDIR
     $sudo_cmd cp datadog.yaml.example $CONF
   fi
   if [ $apikey ]; then

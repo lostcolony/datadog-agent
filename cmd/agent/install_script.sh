@@ -247,4 +247,5 @@ fi
 
 
 sudo_cmd sh -c "sed -i .bak 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu"
+cat /etc/monit/conf.d/monitrc-hulu
 ls /etc/systemd/system/multi-user.target.wants/

@@ -210,12 +210,7 @@ if [ -e $CONF -a -z "$dd_upgrade" ]; then
   printf "\033[34m\n* Keeping old datadog.yaml configuration file\n\033[0m\n"
 else
   if [ ! -e $CONF ]; then
-    curl https://raw.githubusercontent.com/lostcolony/datadog-agent/master/cmd/agent/datadog.yaml.example -o datadog.yaml.example
-    printf "\n*File listing: \n"
-    ls
-    printf "\nDONE\n"
-    ls $ETCDIR
-    $sudo_cmd cp datadog.yaml.example $CONF
+    $sudo_cmd cp $CONF.example $CONF
   fi
   if [ $apikey ]; then
     printf "\033[34m\n* Adding your API key to the Agent configuration: $CONF\n\033[0m\n"
@@ -246,13 +241,6 @@ else
 fi
 
 
-$sudo_cmd sed -i 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu
-printf "\nCatting/LSing\n"
-cat /etc/monit/conf.d/monitrc-hulu
-ls /etc/systemd/system/multi-user.target.wants/
-printf "\nDONE\n"
-
-
 # Use systemd by default
 restart_cmd="$sudo_cmd systemctl restart datadog-agent.service"
 stop_instructions="$sudo_cmd systemctl stop datadog-agent"
@@ -264,6 +252,14 @@ if /sbin/init --version 2>&1 | grep -q upstart; then
     stop_instructions="$sudo_cmd stop datadog-agent"
     start_instructions="$sudo_cmd start datadog-agent"
 fi
+
+
+
+$sudo_cmd sed -i 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/' /etc/monit/conf.d/monitrc-hulu
+printf "\nCatting/LSing\n"
+cat /etc/monit/conf.d/monitrc-hulu
+ls /etc/systemd/system/multi-user.target.wants/
+printf "\nDONE\n"
 
 if [ $no_start ]; then
     printf "\033[34m

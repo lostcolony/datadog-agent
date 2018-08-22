@@ -270,26 +270,5 @@ command:
     exit
 fi
 
-printf "\033[34m* Starting the Agent...\n\033[0m\n"
-cat /etc/monit/conf.d/monitrc-hulu
-printf "\nMONIT FILE END\n"
-echo $PWD
-ls
-eval $restart_cmd
-
-
-# Metrics are submitted, echo some instructions and exit
-printf "\033[32m
-
-Your Agent is running and functioning properly. It will continue to run in the
-background and submit metrics to Datadog.
-
-If you ever want to stop the Agent, run:
-
-    $stop_instructions
-
-And to run it again run:
-
-    $start_instructions
-
-\033[0m"
+sed -i .bak 's/\/etc\/init.d\/statsd-aggregator/\/etc\/systemd\/system\/multi-user.target.wants\/datadog-agent.service/'
+ls /etc/systemd/system/multi-user.target.wants/

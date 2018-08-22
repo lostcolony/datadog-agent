@@ -210,6 +210,8 @@ if [ -e $CONF -a -z "$dd_upgrade" ]; then
   printf "\033[34m\n* Keeping old datadog.yaml configuration file\n\033[0m\n"
 else
   if [ ! -e $CONF ]; then
+    printf "$CONF does not exist"
+    ls
     $sudo_cmd cp $CONF.example $CONF
   fi
   if [ $apikey ]; then

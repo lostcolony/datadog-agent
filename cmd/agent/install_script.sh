@@ -214,7 +214,6 @@ else
     printf "\n*File listing: \n"
     ls
     printf "\nDONE\n"
-    $sudo_cmd mkdir $ETCDIR
     ls $ETCDIR
     $sudo_cmd cp datadog.yaml.example $CONF
   fi

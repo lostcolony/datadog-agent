@@ -5,3 +5,7 @@ dd_url: https://app.datadoghq.com
 # Can be found here:
 # https://app.datadoghq.com/account/settings
 api_key: 
+
+use_dogstatsd: true
+
+dogstatsd_port: 8125
